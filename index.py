@@ -4,6 +4,13 @@ from Book import Book
 from Author import Author
 from Action import Action
 
+# Warning!
+# I think I completed the project BUT there might be a lot of unviewed bugs since
+# I had no time to check every aspect of it.
+# Also, the program is in a raw state:
+# Docs are incomplete!
+# - Daniel
+
 running = True
 new_library = Library("Libreria di Pescara")
 
