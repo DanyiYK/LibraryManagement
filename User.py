@@ -10,6 +10,7 @@ class User:
     def __init__(self, name, badgeNumber=None):
         self.name = name
         self.borrowed = []
+        self.operations = []
 
         badge_number_counter += 1
 
@@ -32,10 +33,13 @@ class User:
         if len(self.borrowed) >= MAX_BORROWED_BOOKS_PER_USER:
             return
         
-        if not book.isAvailable():
+        if not book.inStock <= 0:
             return
         
+        book.inStock -= 1
 
+        self.borrowed.append(book)
+        self.operations.append(Operation("borrow", book))
 
 
     def returnBook(self, book):
