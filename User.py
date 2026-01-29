@@ -42,4 +42,6 @@ class User:
 
 
     def returnBook(self, book):
-        pass
+        # Check if user has book
+        for book in self.borrowed:
+            

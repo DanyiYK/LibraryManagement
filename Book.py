@@ -14,6 +14,3 @@ class Book:
     
     def __repr__(self):
         return f"Book(title={self.title}, isbn={self.isbn}, author={self.author}, count={self.count}, inStock={self.inStock})"
-    
-    def isAvailable(self):
-        pass
