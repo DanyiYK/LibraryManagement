@@ -108,7 +108,7 @@ def promptReturnBook():
 
 def showUserOperations():
     badgeId = input("Insert User's Badge ID: ")
-    user:User = new_library.getUserByBadgeNumber(badgeId)
+    user = new_library.getUserByBadgeNumber(badgeId)
 
     if not user:
         print(f"There's no user with such Badge ID: {badgeId}!")
