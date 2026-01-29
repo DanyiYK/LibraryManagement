@@ -36,6 +36,15 @@ class Library:
         return found_books
 
     def getUserByBadgeNumber(self, badgeNumber):
+        badgeNumber = badgeNumber.lower()
+
         for user in self.users:
             if user.badgeId == badgeNumber:
                 return user
+            
+    def getBookByISBN(self, ISBN):
+        ISBN = ISBN.lower()
+
+        for book in self.books:
+            if book.isbn.lower()==ISBN:
+                return book

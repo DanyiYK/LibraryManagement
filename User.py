@@ -30,23 +30,24 @@ class User:
         return f"User(name={self.name}, badge_number={self.badgeNumber})"
     
     def borrowBook(self, book):
-        if len(self.borrowed) >= MAX_BORROWED_BOOKS_PER_USER:
-            print(f"Cannot give the book: User {self} has exceeded the borrow limit of {MAX_BORROWED_BOOKS_PER_USER} books.")
-            return
-        
         if book.inStock <= 0:
             print(f"Book {book} is out of stock!")
+            return
+        
+        if len(self.borrowed) >= MAX_BORROWED_BOOKS_PER_USER:
+            print(f"Cannot give the book: User {self} has exceeded the borrow limit of {MAX_BORROWED_BOOKS_PER_USER} books.")
             return
         
         book.inStock -= 1
 
         self.borrowed.append(book)
         self.operations.append(Operation("borrow", book))
+
         print(f"User {self} successfully borrowed book {book}")
 
     def returnBook(self, book):
         # Check if user has the book before doing any operation
-        if book in self.borrowed:
+        if not book in self.borrowed:
             print(f"User {self} does not have book {book}!")
             return
 
