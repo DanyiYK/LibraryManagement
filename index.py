@@ -4,6 +4,7 @@ from Book import Book
 from Author import Author
 from Action import Action
 
+running = True
 new_library = Library("Libreria di Pescara")
 
 def printActions(action_list):
@@ -20,8 +21,12 @@ def promptAddUser():
     
     if name=="":
         print("User name cannot be empty!")
-    else:
-        new_user = User(name.strip())
+        return
+    
+    new_user = User(name.strip())
+    new_library.addUser(new_user)
+
+    print("User sucessfully added!")
 
 def promptAddBook():
     name = input("Insert Book's name: ")
@@ -35,7 +40,8 @@ def promptAddBook():
         book_count = 1
 
     new_author = Author(author_name, author_nationality)
-    new_book = Book(name, bookISBN, new_author, book_count)
+    new_book = Book(name, isbn, new_author, book_count)
+    new_library.addBook(new_book)
 
     print("The book was sucessfully added!")
 
@@ -77,14 +83,40 @@ def promptBorrowBook():
     
 
 def promptReturnBook():
-    pass
+    badgeId = input("Insert User's Badge ID: ")
+    user:User = new_library.getUserByBadgeNumber(badgeId)
+
+    if not user:
+        print(f"There's no user with such Badge ID: {badgeId}!")
+        return
+
+    bookISBN = input("Insert book's ISBN:")
+    book = new_library.getBookByISBN(bookISBN)
+
+    if not book:
+        print(f"There's no book with such ISBN: {bookISBN}!")
+        return
+    
+    user.returnBook(book)
 
 def showUserOperations():
-    pass
+    badgeId = input("Insert User's Badge ID: ")
+    user:User = new_library.getUserByBadgeNumber(badgeId)
+
+    if not user:
+        print(f"There's no user with such Badge ID: {badgeId}!")
+        return
+    
+    print("Here's the user's operation history:")
+    
+    for i, v in user.operations:
+        print(f"  {i + 1}. {v}")
 
 def closeProgram():
     global running
     running = False
+
+    print("Thank you for using my Library Management!")
 
 ACTIONS = [
     Action("Add user", promptAddUser),
@@ -99,7 +131,7 @@ ACTIONS = [
 ]
 
 
-while True:
+while running:
     printActions(ACTIONS)
 
     try:
@@ -109,9 +141,12 @@ while True:
 
         continue
     
-    if selected_action <= 1 or selected_action > len(ACTIONS):
-        print(f"The action id must be between 0 and {len(ACTIONS)}!")
+    if selected_action < 1 or selected_action > len(ACTIONS):
+        print(f"The action id must be between 1 and {len(ACTIONS)}!")
     
-    ACTIONS[selected_action].fun()
+    try:
+        ACTIONS[selected_action-1].fun()
+    except Exception as x:
+        print(f"Unexpected error: {x}")
 
     sendContinueMessage()

@@ -39,7 +39,7 @@ class Library:
         badgeNumber = badgeNumber.lower()
 
         for user in self.users:
-            if user.badgeId == badgeNumber:
+            if user.badgeNumber == badgeNumber:
                 return user
             
     def getBookByISBN(self, ISBN):
