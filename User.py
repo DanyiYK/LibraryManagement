@@ -1,7 +1,6 @@
 from Operation import Operation
 from Book import Book
 
-
 MAX_BORROWED_BOOKS_PER_USER = 3
 
 badge_number_counter = 0
